@@ -6,7 +6,7 @@ services:
   #   volumes:
   #     - postgres_data:/var/lib/postgresql/data/
 
-  web:
+  backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -17,6 +17,14 @@ services:
     command: python app/manage.py runserver 0.0.0.0:8000
     # depends_on:
     #   - db
-
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /frontend/node_modules
+      - ./frontend:/frontend
+    ports:
+      - 3000:3000
 # volumes:
 #   postgres_data:
