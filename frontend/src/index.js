@@ -5,13 +5,15 @@ import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 
+import Auth from './components/Auth';
+
 const client = new ApolloClient({
     uri: 'backend/graphql/'
 })
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <Root />
+        <Auth />
     </ApolloProvider>
     , document.getElementById("root"));
 
