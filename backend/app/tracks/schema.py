@@ -1,9 +1,9 @@
 import graphene
 from graphene_django import DjangoObjectType
-from users.schema import UserType
 from graphql import GraphQLError
-from .models import Track, Like
 from django.db.models import Q
+from users.schema import UserType
+from .models import Track, Like
 
 
 class TrackType(DjangoObjectType):
@@ -22,13 +22,13 @@ class Query(graphene.ObjectType):
 
     def resolve_tracks(self, info, search=None):
         if search:
-            filter = (
+            filter_ = (
                 Q(title__icontains=search) |
                 Q(description__icontains=search) |
                 Q(url__icontains=search) |
                 Q(posted_by__username__icontains=search)
             )
-            return Track.objects.filter(filter)
+            return Track.objects.filter(filter_)
         return Track.objects.all()
 
     def resolve_likes(self, info):
