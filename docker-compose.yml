@@ -26,5 +26,12 @@ services:
       - ./frontend:/frontend
     ports:
       - 3000:3000
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
 # volumes:
 #   postgres_data:
