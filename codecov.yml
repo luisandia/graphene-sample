@@ -1,0 +1,5 @@
+coverage:
+  status:
+    project: false
+codecov:
+  token: db1c9e50-8f83-4ca9-a2f0-41d2dbe2b19d
