@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Root from "./Root";
 import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
