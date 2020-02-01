@@ -1,5 +1,5 @@
 FROM node:alpine as builder
-WORKDIR '/frontend'
+WORKDIR /frontend
 COPY ./package.json ./
 RUN npm install
 COPY . .

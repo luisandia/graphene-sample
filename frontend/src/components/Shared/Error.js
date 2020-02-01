@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-// import Button from "@material-ui/core/Button";
-// import Snackbar from "@material-ui/core/Snackbar";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
 
-const Error = ({ classes }) => {
-  return <div>Error</div>;
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const Error = ({ classes, error }) => {
+
+  const [open, setOpen] = useState(true)
+  return <Snackbar className={classes.snackbar}
+    open={open}
+    autoHideDuration={6000}
+    onClose={() => setOpen(false)}
+  >
+    <Alert onClose={() => setOpen(false)} severity="error">
+      {error.message}
+    </Alert>
+  </Snackbar>;
 };
 
 const styles = theme => ({

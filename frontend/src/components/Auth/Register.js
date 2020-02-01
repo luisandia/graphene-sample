@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -21,7 +21,30 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-const Register = ({ classes }) => {
+import Error from '../Shared/Error';
+function Transition(props) {
+  return <Slide direction="up" {...props} />
+}
+
+
+const Register = ({ classes, setNewUser }) => {
+
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = async (event, createUser) => {
+    event.preventDefault();
+    createUser()
+
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return <div className={classes.root}>
     <Paper className={classes.paper}>
       <Avatar className={classes.avatar}>
@@ -32,63 +55,116 @@ const Register = ({ classes }) => {
       </Typography>
 
 
-      <form className={classes.form} noValidate>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          autoComplete="username"
-          autoFocus
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-        >
-          Register
-          </Button>
-        <Button
-          type="submit"
-          fullWidth
-          color="primary"
-          variant="outlined"
+      <Mutation mutation={REGISTER_MUTATION}
+        variables={{ username, email, password }}
+        onCompleted={data => { console.log({ data }); setOpen(true) }}
+      >
+        {
+          (createUser, { loading, error }) => (
+            <form onSubmit={(event) => handleSubmit(event, createUser)} className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                onChange={event => setUsername(event.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={event => setEmail(event.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={event => setPassword(event.target.value)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                disabled={loading || !username.trim() || !email.trim() || !password.trim()}
+              >
+                {loading ? "Registering..." : "Register"}
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                color="primary"
+                variant="outlined"
 
-        >
-          Previous User? Log in here
-          </Button>
-      </form>
+              >
+                Previous User? Log in here
+            </Button>
 
-
+              {/* Error handling */}
+              {error && <Error error={error} />}
+            </form>
+          )
+        }
+      </Mutation>
     </Paper>
+
+    {/* success Dialog */}
+    <Dialog
+      TransitionComponent={Transition}
+      open={open}
+      disableBackdropClick={true}
+      onClose={handleClose} >
+      <DialogTitle>
+        <VerifiedUserTwoTone className={classes.icon} />New Account
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Juser Successfully created
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => setNewUser(false)}
+        >Login
+        </Button>
+      </DialogActions>
+    </Dialog>
   </div>;
 };
+
+const REGISTER_MUTATION = gql`
+mutation ($username: String!, $email: String!, $password: String!) {
+  createUser(username: $username, email: $email, password: $password) {
+    user {
+      id,
+      username
+    }
+  }
+}
+`
+
+
+
+
 
 const styles = theme => ({
   root: {
