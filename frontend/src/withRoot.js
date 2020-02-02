@@ -1,6 +1,6 @@
 import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import indigo from "@material-ui/core/colors/indigo";
+import blue from "@material-ui/core/colors/blue";
 import orange from "@material-ui/core/colors/orange";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -9,14 +9,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: indigo[500],
-      main: indigo[700],
-      dark: indigo[900]
+      light: "#00CBFF",
+      main: "#007BDF",
+      dark: "#006DC6"
     },
     secondary: {
-      light: orange[300],
-      main: orange[500],
-      dark: orange[700]
+      light: "#DFE0E0",
+      main: "#DFE0E0",
+      dark: "#141618"
     }
   },
   typography: {

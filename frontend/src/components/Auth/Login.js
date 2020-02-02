@@ -20,9 +20,11 @@ const Login = ({ classes, setNewUser }) => {
   const [password, setPassword] = useState("")
   const [open, setOpen] = useState(false);
 
-  const handleSubmit = async (event, tokenAuth) => {
+  const handleSubmit = async (event, tokenAuth, client) => {
     event.preventDefault();
-    tokenAuth()
+    const res = await tokenAuth()
+    localStorage.setItem("authToken", res.data.tokenAuth.token)
+    client.writeData({ data: { isLoggedIn: true } });
   }
 
 
@@ -37,12 +39,10 @@ const Login = ({ classes, setNewUser }) => {
 
       <Mutation mutation={LOGIN_MUTATION}
         variables={{ username, password }}
-        onCompleted={data => { console.log({ data }); }}
-
       >
         {
-          (tokenAuth, { loading, error }) => (
-            <form onSubmit={(event) => handleSubmit(event, tokenAuth)} className={classes.form} noValidate>
+          (tokenAuth, { loading, error, called, client }) => (
+            <form onSubmit={(event) => handleSubmit(event, tokenAuth, client)} className={classes.form} noValidate>
               <TextField
                 variant="outlined"
                 margin="normal"

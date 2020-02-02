@@ -25,7 +25,8 @@ SECRET_KEY = 'ic$fj@0%!!ek6y0@$#uyh_#0v)_5ukhctot6q+(3jx6k(%7$^x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost/backend', 'backend']
+# ALLOWED_HOSTS = ['localhost/backend', 'backend']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -65,9 +66,21 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
-
-CORS_ORIGIN_WHITELIST = [
-
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+#     'http://172.26.0.2:8000'
+# ]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 AUTHENTICATION_BACKENDS = [
