@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import App from "./pages/App";
 import Profile from "./pages/Profile";
 import Header from "./components/Shared/Header";
+import Loading from "./components/Shared/Loading";
+import Error from "./components/Shared/Error";
 
 
 const Root = () => (
@@ -13,10 +15,10 @@ const Root = () => (
     {
       ({ data, loading, error }) => {
         if (loading)
-          return <div>Loading</div>
+          return <Loading />
         if (error) {
           console.error(error);
-          return <div>error</div>
+          return <Error error={error} />
         }
         const currentUser = data.me;
 
