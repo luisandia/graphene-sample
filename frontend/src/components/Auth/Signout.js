@@ -16,15 +16,14 @@ const Signout = ({ classes }) => {
   return (
     <ApolloConsumer>
       {client => (
-        <Button onClick={() => handleSignout(client)}>
+        <Button onClick={() => handleSignout(client)} className={classes.root}>
           <Typography
             variant="body1"
             className={classes.buttonText}
-            color="secondary"
           >
             Signout
-      </Typography>
-          <ExitToApp className={classes.buttonIcon} color="secondary" />
+          </Typography>
+          <ExitToApp className={classes.buttonIcon} />
         </Button>
       )}
     </ApolloConsumer>
@@ -34,10 +33,12 @@ const Signout = ({ classes }) => {
 const styles = {
   root: {
     cursor: "pointer",
-    display: "flex"
+    display: "flex",
+    color: "white"
   },
   buttonIcon: {
-    marginLeft: "5px"
+    marginLeft: "5px",
+    color: "white"
   }
 };
 

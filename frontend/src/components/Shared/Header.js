@@ -14,8 +14,8 @@ const Header = ({ classes, currentUser }) => {
       <Toolbar>
         {/* title / logo */}
         <Link to="/" className={classes.grow}>
-          <RadioIcon className={classes.logo} color="secondary" />
-          <Typography variant="h6" color="secondary" noWrap>
+          <RadioIcon className={classes.logo} />
+          <Typography variant="h6" className={classes.typography} noWrap>
             ReactTracks
           </Typography>
         </Link>
@@ -43,6 +43,9 @@ const styles = theme => ({
     margin: 0,
     padding: 0
   },
+  typography: {
+    color: "white",
+  },
   grow: {
     flexGrow: 1,
     display: "flex",
@@ -51,7 +54,8 @@ const styles = theme => ({
   },
   logo: {
     marginRight: theme.spacing(1),
-    fontSize: 45
+    fontSize: 45,
+    color: "white"
   },
   faceIcon: {
     marginRight: theme.spacing(1),
