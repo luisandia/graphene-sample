@@ -23,11 +23,11 @@ const styles = theme => ({
     textDecoration: "none"
   },
   logo: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     fontSize: 45
   },
   faceIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     fontSize: 30,
     color: "white"
   },

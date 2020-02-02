@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 import withRoot from "../../withRoot";
 import Login from './Login';
@@ -10,5 +10,5 @@ export default withRoot(() => {
   return newUser ?
     <Register setNewUser={setNewUser} />
     :
-    <Login />
+    <Login setNewUser={setNewUser} />
 });

@@ -13,7 +13,7 @@ const SearchTracks = ({ classes }) => {
 const styles = theme => ({
   root: {
     padding: "2px 4px",
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     display: "flex",
     alignItems: "center"
   }

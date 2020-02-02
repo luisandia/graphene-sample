@@ -22,9 +22,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Error from '../Shared/Error';
-function Transition(props) {
-  return <Slide direction="up" {...props} />
-}
+
+export const Transition = React.forwardRef((props, ref) => (
+  <Slide direction="up" {...props} ref={ref} />
+))
 
 
 const Register = ({ classes, setNewUser }) => {
@@ -50,7 +51,7 @@ const Register = ({ classes, setNewUser }) => {
       <Avatar className={classes.avatar}>
         <Gavel />
       </Avatar>
-      <Typography variant="headline">
+      <Typography variant="h5">
         register
       </Typography>
 
@@ -112,7 +113,7 @@ const Register = ({ classes, setNewUser }) => {
                 fullWidth
                 color="primary"
                 variant="outlined"
-
+                onClick={() => setNewUser(false)}
               >
                 Previous User? Log in here
             </Button>
@@ -170,8 +171,8 @@ const styles = theme => ({
   root: {
     width: "auto",
     display: "block",
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    marginLeft: theme.spacing(1) * 3,
+    marginRight: theme.spacing(1) * 3,
     [theme.breakpoints.up("md")]: {
       width: 400,
       marginLeft: "auto",
@@ -179,27 +180,27 @@ const styles = theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing.unit * 8,
+    marginTop: theme.spacing(1) * 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing(1) * 2
   },
   title: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(1) * 2,
     color: theme.palette.openTitle
   },
   avatar: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
   },
   form: {
     width: "100%",
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing(1)
   },
   submit: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
+    marginTop: theme.spacing(1) * 2,
+    marginBottom: theme.spacing(1) * 2
   },
   icon: {
     padding: "0px 2px 2px 0px",

@@ -28,7 +28,7 @@ const styles = theme => ({
     maxWidth: 550
   },
   textField: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   cancel: {
     color: "red"
@@ -37,18 +37,18 @@ const styles = theme => ({
     color: "green"
   },
   button: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing(1) * 2
   },
   icon: {
-    marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing(1)
   },
   input: {
     display: "none"
   },
   fab: {
     position: "fixed",
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    bottom: theme.spacing(1) * 2,
+    right: theme.spacing(1) * 2,
     zIndex: "200"
   }
 });

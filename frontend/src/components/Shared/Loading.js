@@ -10,7 +10,7 @@ const styles = theme => ({
     textAlign: "center"
   },
   progress: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(1) * 2,
     color: theme.palette.secondary.dark
   }
 });

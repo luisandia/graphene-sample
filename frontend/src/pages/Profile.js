@@ -17,11 +17,11 @@ const styles = theme => ({
   paper: {
     width: "auto",
     display: "block",
-    padding: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    padding: theme.spacing(1) * 2,
+    marginLeft: theme.spacing(1) * 3,
+    marginRight: theme.spacing(1) * 3,
+    marginTop: theme.spacing(1) * 2,
+    marginBottom: theme.spacing(1) * 2,
     [theme.breakpoints.up("md")]: {
       width: 650,
       marginLeft: "auto",
@@ -35,20 +35,20 @@ const styles = theme => ({
   title: {
     display: "flex",
     alignItems: "center",
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing(1) * 2
   },
   audioIcon: {
     color: "purple",
     fontSize: 30,
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   },
   thumbIcon: {
     color: "green",
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   },
   divider: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
 });
 

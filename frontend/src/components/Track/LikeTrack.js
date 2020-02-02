@@ -12,7 +12,7 @@ const styles = theme => ({
     color: "deeppink"
   },
   icon: {
-    marginLeft: theme.spacing.unit / 2
+    marginLeft: theme.spacing(1) / 2
   }
 });
 
