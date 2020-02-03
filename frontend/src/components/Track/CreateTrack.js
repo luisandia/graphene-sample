@@ -29,10 +29,17 @@ const CreateTrack = ({ classes }) => {
   const [description, setDescription] = useState("")
   const [file, setFile] = useState("")
   const [submitting, setSubmitting] = useState(false)
+  const [fileError, setFileError] = useState("")
 
   const handleAudioChange = event => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    const fileSizeLimit = 10000000;//10mb
+    if (selectedFile && selectedFile.size > fileSizeLimit) {
+      setFileError(`${selectedFile.name}: File size too large`);
+    } else {
+      setFile(selectedFile);
+      setFileError("");
+    }
   }
 
   const handleAudioUpload = async () => {
@@ -76,6 +83,9 @@ const CreateTrack = ({ classes }) => {
         console.log({ data });
         setOpen(false);
         setSubmitting(false);
+        setTitle("");
+        setDescription("");
+        setFile("");
       }}
       refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}
     >
@@ -98,6 +108,7 @@ const CreateTrack = ({ classes }) => {
                     label="Title"
                     type="text"
                     className={classes.textField}
+                    value={title}
                     onChange={event => setTitle(event.target.value)}
                   />
                   <TextField
@@ -106,9 +117,10 @@ const CreateTrack = ({ classes }) => {
                     multiline
                     placeholder="Add Description"
                     rows="4"
+                    value={description}
                     onChange={event => setDescription(event.target.value)}
                   />
-                  <FormControl>
+                  <FormControl error={Boolean(fileError)} >
                     <input id="audio" required type="file" className={classes.input}
                       accept="audio/mp3,audio/wav"
                       onChange={handleAudioChange}
@@ -122,6 +134,7 @@ const CreateTrack = ({ classes }) => {
                         <LibraryMusicIcon className={classes.icon} />
                       </Button>
                       {file && file.name}
+                      <FormHelperText>{fileError}</FormHelperText>
                     </label>
                   </FormControl>
                 </DialogContent>
@@ -131,7 +144,7 @@ const CreateTrack = ({ classes }) => {
                     Cancel
                   </Button>
                   <Button type="submit" className={classes.save}
-                    disabled={submitting || !title.trim() || !description.trim() || !file}
+                    disabled={Boolean(fileError) || submitting || !title.trim() || !description.trim() || !file}
                   >
                     {submitting ? (<CircularProgress className={classes.save} size={24} />) : ("Add Track")}
                   </Button>
