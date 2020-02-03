@@ -9,7 +9,8 @@ const Signout = ({ classes }) => {
 
 
   const handleSignout = client => {
-    localStorage.removeItem('authtoken');
+    localStorage.removeItem('authToken');
+    client.cache.reset();
     client.writeData({ data: { isLoggedIn: false } });
   }
 
