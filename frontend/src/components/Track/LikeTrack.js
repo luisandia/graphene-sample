@@ -10,7 +10,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
   const currentUser = useContext(UserContext);
   const handleDisabledLikedTrack = () => {
     const userLikes = currentUser.likeSet;
-    const isTrackLiked = userLikes.findIndex(({track}) => { debugger;return track.id === trackId;}) > -1;
+    const isTrackLiked = userLikes.findIndex(({ track }) => track.id === trackId) > -1;
     return isTrackLiked;
   }
   return (

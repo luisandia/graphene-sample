@@ -56,6 +56,12 @@ const CreateTrack = ({ classes }) => {
       console.error('error uploading file ', err);
       setSubmitting(false);
     }
+  }
+
+  const handleUpdateCache = (cache, { data: { createTrack } }) => {
+    const data = cache.readQuery({ query: GET_TRACKS_QUERY });
+    const tracks = data.tracks.concat(createTrack.track);
+    cache.writeQuery({ query: GET_TRACKS_QUERY, data: { tracks } });
 
   }
 
@@ -87,7 +93,8 @@ const CreateTrack = ({ classes }) => {
         setDescription("");
         setFile("");
       }}
-      refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}
+      // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}
+      update={handleUpdateCache}
     >
       {
         (createTrack, { loading, error }) => {
@@ -162,11 +169,18 @@ mutation ($title:String!,$description:String!,$url:String!){
   createTrack(title:$title,description:$description,url:$url)
   {
     track {
+    id
+    title
+    description
+    url
+    likes{
       id
-      title
-      description
-      url
     }
+    postedBy{
+      id
+      username
+    }
+  }
   }
 }
 `;
