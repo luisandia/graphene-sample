@@ -1,5 +1,5 @@
 FROM node:alpine
 WORKDIR /frontend
-COPY ./package.json .
-RUN yarn
-COPY . .
+# COPY ./package.json .
+# RUN yarn
+# COPY . .

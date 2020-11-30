@@ -1,0 +1,69 @@
+overwrite: true
+# schema: 'http://localhost:8000/graphql/'
+schema:   [
+    ./graphql.schema.json,
+  ]
+
+documents:
+  - src/**/*.{ts,tsx}
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  src/api/graphql/api.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      namingConvention:
+        enumValues: keep
+      maybeValue: T
+      withHooks: true
+      nonOptionalTypename: true
+      transformUnderscore: true
+      scalars:
+        Date: string
+        URL: string
+        Upload: string
+        ID: number
+    presetConfig:
+      extension: .generated.tsx
+      baseTypesPath: types.ts
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
+
+
+
+# another config
+
+# overwrite: true
+# schema: 'http://localhost:8000/graphql/'
+
+# documents:
+#   - src/**/*.{ts,tsx}
+# hooks:
+#   afterAllFileWrite:
+#     - prettier --write
+# generates:
+#   src/api/graphql/api.tsx:
+#     plugins:
+#       - "typescript"
+#     config:
+#       namingConvention:
+#         enumValues: keep
+#       withHooks: true
+#       nonOptionalTypename: true
+#       transformUnderscore: true
+#       scalars:
+#         Date: string
+#         URL: string
+#         Upload: string
+#     preset: near-operation-file
+#     presetConfig:
+#       extension: .generated.tsx
+#       baseTypesPath: types.ts
+#   ./graphql.schema.json:
+#     plugins:
+#       - "introspection"

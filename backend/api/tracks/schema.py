@@ -4,6 +4,7 @@ from graphql import GraphQLError
 from django.db.models import Q
 from users.schema import UserType
 from .models import Track, Like
+from graphql_jwt.decorators import login_required
 
 
 class TrackType(DjangoObjectType):
@@ -17,10 +18,12 @@ class LikeType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    tracks = graphene.List(TrackType, search=graphene.String())
+    tracks = graphene.List(graphene.NonNull(TrackType), search=graphene.String())
     likes = graphene.List(LikeType)
 
+
     def resolve_tracks(self, info, search=None):
+
         if search:
             filter_ = (
                 Q(title__icontains=search) |
