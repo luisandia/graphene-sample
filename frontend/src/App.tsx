@@ -9,6 +9,7 @@ import { Header } from './components/Shared/Header';
 import { Loading } from './components/Shared/Loading';
 import MainContext, { initialState } from './MainContext';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import ProtectedRoute from './ProtectedRoute';
 import reducer from './reducer';
 
@@ -48,12 +49,9 @@ function App() {
       <MainContext.Provider value={{ state, dispatch }}>
         <Router>
           <Header />
-          {/* <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route exact path="/profile/:id" component={Profile} />
-      </Switch> */}
           <Switch>
             <ProtectedRoute exact path="/" component={Dashboard} />
+            <ProtectedRoute exact path="/profile/:id" component={Profile} />
             <Route exact path="/login" component={Login} />
           </Switch>
         </Router>

@@ -283,6 +283,35 @@ export type SearchTracksQuery = { __typename: "Query" } & {
   >;
 };
 
+export type UserProfileQueryVariables = Exact<{
+  id: Scalars["Int"];
+}>;
+
+export type UserProfileQuery = { __typename: "Query" } & {
+  user?: Maybe<
+    { __typename: "UserType" } & Pick<
+      UserType,
+      "id" | "username" | "dateJoined"
+    > & {
+        likeSet: Array<
+          { __typename: "LikeType" } & Pick<LikeType, "id"> & {
+              track: { __typename: "TrackType" } & {
+                postedBy?: Maybe<
+                  { __typename: "UserType" } & Pick<UserType, "id" | "username">
+                >;
+              } & TrackSetFragmentFragment;
+            }
+        >;
+        trackSet: Array<{ __typename: "TrackType" } & TrackSetFragmentFragment>;
+      }
+  >;
+};
+
+export type TrackSetFragmentFragment = { __typename: "TrackType" } & Pick<
+  TrackType,
+  "id" | "title" | "url"
+> & { likes: Array<{ __typename: "LikeType" } & Pick<LikeType, "id">> };
+
 export const CurrentUserFragmentDoc = gql`
   fragment currentUser on UserType {
     id
@@ -292,6 +321,16 @@ export const CurrentUserFragmentDoc = gql`
     email
     isStaff
     isSuperuser
+  }
+`;
+export const TrackSetFragmentFragmentDoc = gql`
+  fragment trackSetFragment on TrackType {
+    id
+    title
+    url
+    likes {
+      id
+    }
   }
 `;
 export const TokenAuthDocument = gql`
@@ -622,4 +661,74 @@ export type SearchTracksLazyQueryHookResult = ReturnType<
 export type SearchTracksQueryResult = Apollo.QueryResult<
   SearchTracksQuery,
   SearchTracksQueryVariables
+>;
+export const UserProfileDocument = gql`
+  query userProfile($id: Int!) {
+    user(id: $id) {
+      id
+      username
+      dateJoined
+      likeSet {
+        id
+        track {
+          ...trackSetFragment
+          postedBy {
+            id
+            username
+          }
+        }
+      }
+      trackSet {
+        ...trackSetFragment
+      }
+    }
+  }
+  ${TrackSetFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserProfileQuery__
+ *
+ * To run a query within a React component, call `useUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserProfileQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserProfileQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserProfileQuery,
+    UserProfileQueryVariables
+  >
+) {
+  return Apollo.useQuery<UserProfileQuery, UserProfileQueryVariables>(
+    UserProfileDocument,
+    baseOptions
+  );
+}
+export function useUserProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserProfileQuery,
+    UserProfileQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<UserProfileQuery, UserProfileQueryVariables>(
+    UserProfileDocument,
+    baseOptions
+  );
+}
+export type UserProfileQueryHookResult = ReturnType<typeof useUserProfileQuery>;
+export type UserProfileLazyQueryHookResult = ReturnType<
+  typeof useUserProfileLazyQuery
+>;
+export type UserProfileQueryResult = Apollo.QueryResult<
+  UserProfileQuery,
+  UserProfileQueryVariables
 >;

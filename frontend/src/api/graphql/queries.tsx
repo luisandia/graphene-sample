@@ -17,6 +17,7 @@ export const GET_TRACKS = gql`
     }
   }
 `;
+
 export const CurrentUser = gql`
   fragment currentUser on UserType {
     id
@@ -51,6 +52,40 @@ export const SEARCH_TRACKS = gql`
         id
         username
       }
+    }
+  }
+`;
+
+export const PROFILE_QUERY = gql`
+  query userProfile($id: Int!) {
+    user(id: $id) {
+      id
+      username
+      dateJoined
+      likeSet {
+        id
+        track {
+          ...trackSetFragment
+          postedBy {
+            id
+            username
+          }
+        }
+      }
+      trackSet {
+        ...trackSetFragment
+      }
+    }
+  }
+`;
+
+export const TrackSetFragment = gql`
+  fragment trackSetFragment on TrackType {
+    id
+    title
+    url
+    likes {
+      id
     }
   }
 `;
