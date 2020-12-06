@@ -4,7 +4,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 // import MuiAlert from '@material-ui/lab/Alert';
 import { Alert as MuiAlert } from '@material-ui/lab';
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 
 interface Props {
   error: ApolloError | undefined;
@@ -17,6 +16,7 @@ export const errorStyles = makeStyles((theme: Theme) => ({
 }));
 
 function Alert(props: any) {
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 

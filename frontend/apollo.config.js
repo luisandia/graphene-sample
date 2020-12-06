@@ -11,7 +11,7 @@ module.exports = {
       skipSSLValidation: true,
       localSchemaFile: './graphql.schema.json',
     },
-    excludes: ['src/**/api.tsx', 'src/**/queries.tsx', 'src/**/mutations.tsx'],
+    excludes: ['src/**/api.tsx', 'src/**/queries.*.tsx', 'src/**/mutations.*.tsx'],
   },
   queries: [
     {

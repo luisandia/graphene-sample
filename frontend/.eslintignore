@@ -8,4 +8,5 @@
 /extracted
 index.js
 /danger
+graphql.schema.json
 src/api/graphql/api.tsx

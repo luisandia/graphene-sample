@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+package.json
+ios
+android
+vendor
+.jest/
+.vscode/
+extracted/
+graphql.schema.json
+test/e2e
+src/api/graphql/api.tsx

@@ -1,17 +1,13 @@
-import React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import RadioIcon from '@material-ui/icons/RadioTwoTone';
-import FaceIcon from '@material-ui/icons/FaceTwoTone';
 import Typography from '@material-ui/core/Typography';
+import FaceIcon from '@material-ui/icons/FaceTwoTone';
+import RadioIcon from '@material-ui/icons/RadioTwoTone';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
-import { Signout } from '../Auth/Signout';
-import { useMeQuery } from '../../api/graphql/api';
-import { Loading } from './Loading';
-import Error from './Error';
 import MainContext from '../../MainContext';
+import { Signout } from '../Auth/Signout';
 
 export const headerStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +43,6 @@ export const headerStyles = makeStyles((theme) => ({
 export const Header = () => {
   const classes = headerStyles();
   const { state } = React.useContext(MainContext);
-  console.log('MY STATE ', state);
   const { currentUser } = state;
 
   return (

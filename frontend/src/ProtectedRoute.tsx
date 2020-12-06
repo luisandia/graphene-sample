@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import MainContext from './MainContext';

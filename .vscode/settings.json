@@ -1,4 +1,8 @@
 {
     "deepscan.enable": true,
-    "python.pythonPath": "backend/.venv/bin/python"
+    "python.pythonPath": "backend/.venv/bin/python",
+    "typescript.tsdk": "frontend/node_modules/typescript/lib",
+    "eslint.workingDirectories": [
+        "frontend",
+      ]
 }

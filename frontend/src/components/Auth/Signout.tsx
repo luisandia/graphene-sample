@@ -38,3 +38,4 @@ export const Signout = () => {
     </Button>
   );
 };
+export default Signout;

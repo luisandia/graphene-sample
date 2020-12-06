@@ -98,10 +98,10 @@ const CreateTrack = () => {
   };
 
   const handleUpdateCache = (): MutationUpdaterFn<CreateTrackMutation> => (cache, { data }) => {
-    const data_ = cache.readQuery<GetTracksQuery, GetTracksQueryVariables>({
+    const cacheData = cache.readQuery<GetTracksQuery, GetTracksQueryVariables>({
       query: GetTracksDocument,
     });
-    const tracks = data_?.tracks?.concat(data!.createTrack!.track!);
+    const tracks = cacheData?.tracks?.concat(data!.createTrack!.track!);
     cache.writeQuery({ query: GetTracksDocument, data: { tracks } });
   };
 
@@ -110,7 +110,7 @@ const CreateTrack = () => {
     setSubmitting(true);
     // upload our audio file, get returned url from api
     const uploadedUrl = await handleAudioUpload();
-    console.log(uploadedUrl);
+
     await createTrackMutation({
       variables: { title, description, url: uploadedUrl },
       update: handleUpdateCache(),

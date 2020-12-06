@@ -30,7 +30,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const [meQuery, { data, loading, error }] = useMeLazyQuery();
+  const [meQuery, { data, loading }] = useMeLazyQuery();
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 

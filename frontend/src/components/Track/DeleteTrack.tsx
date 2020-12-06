@@ -8,27 +8,24 @@ import {
   GetTracksDocument,
   GetTracksQuery,
   GetTracksQueryVariables,
-  TrackType,
-  useDeleteTrackMutation,
-  TrackSetFragmentFragment,
-  SearchTracksQuery,
-} from '../../api/graphql/api';
-import MainContext from '../../MainContext';
+  SearchTracksQuery, useDeleteTrackMutation
+} from 'src/api/graphql/api';
+import MainContext from 'src/MainContext';
 
 const DeleteTrack = ({
   track,
 }: {
   track: ValuesType<NonNullable<SearchTracksQuery['tracks']>>;
 }) => {
-  const [deleteTrackMutation, _] = useDeleteTrackMutation();
+  const [deleteTrackMutation,] = useDeleteTrackMutation();
   const { state } = React.useContext(MainContext);
   const { currentUser } = state;
   const handleUpdateCache: MutationUpdaterFn<DeleteTrackMutation> = (cache, { data }) => {
-    const data_ = cache.readQuery<GetTracksQuery, GetTracksQueryVariables>({
+    const cacheData = cache.readQuery<GetTracksQuery, GetTracksQueryVariables>({
       query: GetTracksDocument,
     });
-    const tracks = data_!.tracks!.filter(
-      (track) => Number(track.id) !== data?.deleteTrack?.trackId,
+    const tracks = cacheData!.tracks!.filter(
+      (track_) => Number(track_.id) !== data?.deleteTrack?.trackId,
     );
     cache.writeQuery({ query: GetTracksDocument, data: { tracks } });
   };

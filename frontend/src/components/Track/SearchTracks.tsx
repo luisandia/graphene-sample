@@ -7,7 +7,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import SearchIcon from '@material-ui/icons/Search';
 import React, { useRef, useState } from 'react';
 import { SearchTracksQuery, SearchTracksQueryVariables } from '../../api/graphql/api';
-import { SEARCH_TRACKS } from '../../api/graphql/queries';
+import { SEARCH_TRACKS } from '../../api/graphql/queries.graphql';
 
 const styles = makeStyles((theme: Theme) => ({
   root: {

@@ -48,9 +48,8 @@ export const loginStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface Props {}
 
-const Login = (props: Props) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { dispatch } = useContext(MainContext);
@@ -61,7 +60,7 @@ const Login = (props: Props) => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log(username, password);
+
     try {
       const { data } = await tokenAuthMutation({ variables: { username, password } });
       const prom = client.query<MeQuery, MeQueryVariables>({
@@ -75,18 +74,17 @@ const Login = (props: Props) => {
           dispatch({ type: 'LOGIN_USER', payload: { currentUser: user.data.me } });
         })
         .catch((e) => {
-          console.log('ERROR LOGIN ', e);
+          console.error('ERROR LOGIN ', e);
         });
       dispatch({ type: 'IS_LOGGED_IN', payload: { isAuth: true } });
 
       history.push('/');
     } catch (e) {
-      console.log(e);
+      console.error(e);
       dispatch({ type: 'IS_LOGGED_IN', payload: { isAuth: false } });
     }
   };
-  // if(currentUser){}
-  // console.log(data)
+
   const classes = loginStyles();
 
   return (

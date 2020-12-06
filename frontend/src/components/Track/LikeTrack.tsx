@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import React from 'react';
 import MainContext from '../../MainContext';
-import { mutationCreateLike } from './api/graphql';
+import mutationCreateLike from './api/graphql';
 
 const styles = makeStyles((theme: Theme) => ({
   iconButton: {
@@ -47,3 +47,5 @@ export const LikeTrack: React.FC<Props> = ({ trackId, likeCount }) => {
     </IconButton>
   );
 };
+
+export default LikeTrack;

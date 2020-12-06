@@ -38,15 +38,16 @@ const trackStyles = makeStyles({
 const TrackList: React.FC<Pick<SearchTracksQuery, 'tracks'> | undefined> = (props) => {
   const classes = trackStyles();
   const [getTracksQuery, { data, error, loading }] = useGetTracksLazyQuery();
-  // const { data, error, loading } = useGetTracksQueryQuery();
+
   React.useEffect(() => {
     getTracksQuery();
   }, [getTracksQuery]);
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
+  let { tracks } = props;
 
-  const tracks = props.tracks ?? data?.tracks ?? [];
+  tracks = tracks ?? data?.tracks ?? [];
 
   return (
     <List>

@@ -8,18 +8,18 @@
 // ====================================================
 
 export interface CreateLike_createLike_track_likes {
-  __typename: "LikeType";
+  __typename: 'LikeType';
   id: string;
 }
 
 export interface CreateLike_createLike_track {
-  __typename: "TrackType";
+  __typename: 'TrackType';
   id: string;
   likes: CreateLike_createLike_track_likes[];
 }
 
 export interface CreateLike_createLike {
-  __typename: "CreateLike";
+  __typename: 'CreateLike';
   track: CreateLike_createLike_track | null;
 }
 
