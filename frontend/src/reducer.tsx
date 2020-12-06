@@ -1,6 +1,5 @@
 import { ContextState } from './MainContext';
 
-
 interface Action {
   type: string;
   payload: ContextState;

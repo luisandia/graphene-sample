@@ -61,11 +61,11 @@ const TrackList: React.FC<Pick<SearchTracksQuery, 'tracks'> | undefined> = (prop
                   color: 'primary',
                 }}
                 primary={track.title}
-                secondary={
+                secondary={(
                   <Link className={classes.link} to={`/profile/${track.postedBy?.id}`}>
                     {track.postedBy?.username}
                   </Link>
-                }
+                )}
               />
               <AudioPlayer url={track.url} />
             </ListItem>

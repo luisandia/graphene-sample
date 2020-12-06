@@ -7,7 +7,7 @@ interface Props {
 
 const AudioPlayer: React.FC<Props> = ({ url }) => (
   <div>
-    <ReactPlayer url={url} height="50px" width="500px" controls={true} />
+    <ReactPlayer url={url} height="50px" width="500px" controls />
   </div>
 );
 

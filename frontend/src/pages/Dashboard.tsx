@@ -4,6 +4,7 @@ import { SearchTracksQuery } from '../api/graphql/api';
 import CreateTrack from '../components/Track/CreateTrack';
 import SearchTracks from '../components/Track/SearchTracks';
 import TrackList from '../components/Track/TrackList';
+
 interface Props {}
 
 const styles = makeStyles((theme) => ({

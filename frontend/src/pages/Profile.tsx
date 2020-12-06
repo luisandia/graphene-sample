@@ -55,7 +55,7 @@ const styles = makeStyles((theme: Theme) => ({
 }));
 
 const Profile = () => {
-  let { id } = useParams<Record<string, string | undefined>>();
+  const { id } = useParams<Record<string, string | undefined>>();
   const classes = styles();
 
   const { data, loading, error } = useUserProfileQuery({
@@ -87,7 +87,12 @@ const Profile = () => {
         {data!.user!.trackSet.map((track) => (
           <div key={track.id}>
             <Typography>
-              {track.title} · {track.likes.length} Likes
+              {track.title}
+              {' '}
+              ·
+              {track.likes.length}
+              {' '}
+              Likes
             </Typography>
             <AudioPlayer url={track.url} />
             <Divider className={classes.divider} />
@@ -104,7 +109,13 @@ const Profile = () => {
         {data!.user!.likeSet.map(({ track }) => (
           <div key={track.id}>
             <Typography>
-              {track.title} · {track.likes.length} Likes · {track.postedBy?.username}
+              {track.title}
+              {' '}
+              ·
+              {track.likes.length}
+              {' '}
+              Likes ·
+              {track.postedBy?.username}
             </Typography>
             <AudioPlayer url={track.url} />
             <Divider className={classes.divider} />

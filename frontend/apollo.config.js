@@ -9,7 +9,7 @@ module.exports = {
       // },
       // optional disable SSL validation check
       skipSSLValidation: true,
-      localSchemaFile: './graphql.schema.json'
+      localSchemaFile: './graphql.schema.json',
     },
     excludes: ['src/**/api.tsx', 'src/**/queries.tsx', 'src/**/mutations.tsx'],
   },

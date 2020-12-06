@@ -2,6 +2,7 @@ import { MutationUpdaterFn } from '@apollo/client';
 import IconButton from '@material-ui/core/IconButton';
 import TrashIcon from '@material-ui/icons/DeleteForeverOutlined';
 import React from 'react';
+import { ValuesType } from 'utility-types';
 import {
   DeleteTrackMutation,
   GetTracksDocument,
@@ -13,7 +14,6 @@ import {
   SearchTracksQuery,
 } from '../../api/graphql/api';
 import MainContext from '../../MainContext';
-import { ValuesType } from 'utility-types';
 
 const DeleteTrack = ({
   track,
@@ -22,7 +22,7 @@ const DeleteTrack = ({
 }) => {
   const [deleteTrackMutation, _] = useDeleteTrackMutation();
   const { state } = React.useContext(MainContext);
-  const currentUser = state.currentUser;
+  const { currentUser } = state;
   const handleUpdateCache: MutationUpdaterFn<DeleteTrackMutation> = (cache, { data }) => {
     const data_ = cache.readQuery<GetTracksQuery, GetTracksQueryVariables>({
       query: GetTracksDocument,
@@ -53,7 +53,7 @@ const DeleteTrack = ({
       <TrashIcon />
     </IconButton>
   ) : (
-    <div></div>
+    <div />
   );
 };
 export default DeleteTrack;

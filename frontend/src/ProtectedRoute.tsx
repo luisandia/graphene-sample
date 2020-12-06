@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import MainContext from './MainContext';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
+import MainContext from './MainContext';
 import { useMeQuery } from './api/graphql/api';
 import { Loading } from './components/Shared/Loading';
 
@@ -26,9 +26,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
 
   return (
     <Route
-      render={(props) =>
-        state.isAuth || pass ? <Component {...props} /> : <Redirect to="/login" />
-      }
+      render={(props) => (state.isAuth || pass ? <Component {...props} /> : <Redirect to="/login" />)}
       {...rest}
     />
   );

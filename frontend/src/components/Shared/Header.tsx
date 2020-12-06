@@ -6,8 +6,8 @@ import RadioIcon from '@material-ui/icons/RadioTwoTone';
 import FaceIcon from '@material-ui/icons/FaceTwoTone';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import { Signout } from '../Auth/Signout';
 import { makeStyles } from '@material-ui/core';
+import { Signout } from '../Auth/Signout';
 import { useMeQuery } from '../../api/graphql/api';
 import { Loading } from './Loading';
 import Error from './Error';
@@ -47,8 +47,8 @@ export const headerStyles = makeStyles((theme) => ({
 export const Header = () => {
   const classes = headerStyles();
   const { state } = React.useContext(MainContext);
-  console.log("MY STATE ",state)
-  const currentUser = state.currentUser;
+  console.log('MY STATE ', state);
+  const { currentUser } = state;
 
   return (
     <AppBar position="static" className={classes.root}>

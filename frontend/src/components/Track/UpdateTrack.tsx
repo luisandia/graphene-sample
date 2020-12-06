@@ -72,7 +72,7 @@ const UpdateTrack: React.FC<Props> = ({ track }) => {
 
   const handleAudioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.item(0);
-    const fileSizeLimit = 10000000; //10mb
+    const fileSizeLimit = 10000000; // 10mb
     if (selectedFile && selectedFile.size > fileSizeLimit) {
       setFileError(`${selectedFile.name}: File size too large`);
     } else {
@@ -194,7 +194,7 @@ const UpdateTrack: React.FC<Props> = ({ track }) => {
       </Dialog>
     </>
   ) : (
-    <div></div>
+    <div />
   );
 };
 

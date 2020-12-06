@@ -1,9 +1,13 @@
 import { useApolloClient } from '@apollo/client';
-import { Avatar, Button, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
+import {
+  Avatar, Button, makeStyles, TextField, Theme, Typography,
+} from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTokenAuthMutation, MeDocument, MeQuery, MeQueryVariables } from '../../api/graphql/api';
+import {
+  MeDocument, MeQuery, MeQueryVariables, useTokenAuthMutation,
+} from '../../api/graphql/api';
 import MainContext from '../../MainContext';
 import Error from '../Shared/Error';
 
@@ -57,7 +61,6 @@ const Login = (props: Props) => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // setLoading(true)
     console.log(username, password);
     try {
       const { data } = await tokenAuthMutation({ variables: { username, password } });

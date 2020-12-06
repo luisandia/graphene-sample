@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import { CurrentUserFragment } from './api/graphql/api';
 
 export interface ContextState {

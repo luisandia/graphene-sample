@@ -28,7 +28,7 @@ export const LikeTrack: React.FC<Props> = ({ trackId, likeCount }) => {
 
   const handleDisabledLikedTrack = () => {
     const userLikes = currentUser!.likeSet;
-    const isTrackLiked = userLikes.findIndex(({track}) => track?.id === 1) > -1;
+    const isTrackLiked = userLikes.findIndex(({ track }) => track?.id === 1) > -1;
 
     return isTrackLiked;
   };

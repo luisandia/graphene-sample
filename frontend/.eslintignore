@@ -1,0 +1,11 @@
+/coverage
+/vendor
+/ios
+/android
+/build
+/.jest
+/.bundle
+/extracted
+index.js
+/danger
+src/api/graphql/api.tsx

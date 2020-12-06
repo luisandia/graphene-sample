@@ -1,18 +1,11 @@
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import React, { useReducer } from 'react';
-import ReactDOM from 'react-dom';
 import {
-  CurrentUserFragment,
-  MeDocument,
-  MeQuery,
-  MeQueryVariables,
-  useMeLazyQuery,
-} from './api/graphql/api';
+  ApolloClient, ApolloProvider, createHttpLink, InMemoryCache,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-import MainContext, { initialState } from './MainContext';
-import reducer from './reducer';
 import reportWebVitals from './reportWebVitals';
 
 const httpLink = createHttpLink({
@@ -23,7 +16,6 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
-  console.log('my token ', token);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -38,19 +30,13 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const Root = () => {
-  // const ini = useContext(MainContext);
-
-
-
-  return (
-    <ApolloProvider client={client}>
-      <React.StrictMode>
-          <App />
-      </React.StrictMode>
-    </ApolloProvider>
-  );
-};
+const Root = () => (
+  <ApolloProvider client={client}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ApolloProvider>
+);
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 
