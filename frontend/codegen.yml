@@ -22,6 +22,9 @@ generates:
       withHooks: true
       nonOptionalTypename: true
       transformUnderscore: true
+      withResultType: true
+      # preResolveTypes: true # this will declare types instead of use Pick
+      strict: true
       scalars:
         Date: string
         URL: string

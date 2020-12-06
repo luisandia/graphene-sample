@@ -1,23 +1,22 @@
-import React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionActions from '@material-ui/core/AccordionActions';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionActions from '@material-ui/core/AccordionActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AudioPlayer from '../Shared/AudioPlayer';
-// import LikeTrack from './LikeTrack';
-import DeleteTrack from './DeleteTrack';
-// import UpdateTrack from './UpdateTrack';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { TrackType, useGetTracksLazyQuery, SearchTracksQuery } from '../../api/graphql/api';
-import { makeStyles } from '@material-ui/core';
-import { Loading } from '../Shared/Loading';
+import { SearchTracksQuery, useGetTracksLazyQuery } from '../../api/graphql/api';
+import AudioPlayer from '../Shared/AudioPlayer';
 import Error from '../Shared/Error';
+import { Loading } from '../Shared/Loading';
+import DeleteTrack from './DeleteTrack';
+import { LikeTrack } from './LikeTrack';
+import UpdateTrack from './UpdateTrack';
 
 const trackStyles = makeStyles({
   root: {
@@ -55,7 +54,7 @@ const TrackList: React.FC<Pick<SearchTracksQuery, 'tracks'> | undefined> = (prop
         <Accordion key={track.id}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <ListItem className={classes.root}>
-              {/* <LikeTrack trackId={track.id} likeCount={track.likes.length} /> */}
+              <LikeTrack trackId={track.id} likeCount={track.likes.length} />
               <ListItemText
                 primaryTypographyProps={{
                   variant: 'subtitle1',
@@ -75,8 +74,8 @@ const TrackList: React.FC<Pick<SearchTracksQuery, 'tracks'> | undefined> = (prop
             <Typography variant="body1">{track.description}</Typography>
           </AccordionDetails>
           <AccordionActions>
-            {/* <UpdateTrack track={track} /> */}
-            <DeleteTrack track={track as TrackType} />
+            <UpdateTrack track={track} />
+            <DeleteTrack track={track} />
           </AccordionActions>
         </Accordion>
       ))}

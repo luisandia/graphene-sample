@@ -9,10 +9,17 @@ import {
   GetTracksQueryVariables,
   TrackType,
   useDeleteTrackMutation,
+  TrackSetFragmentFragment,
+  SearchTracksQuery,
 } from '../../api/graphql/api';
 import MainContext from '../../MainContext';
+import { ValuesType } from 'utility-types';
 
-const DeleteTrack = ({ track }: { track: TrackType }) => {
+const DeleteTrack = ({
+  track,
+}: {
+  track: ValuesType<NonNullable<SearchTracksQuery['tracks']>>;
+}) => {
   const [deleteTrackMutation, _] = useDeleteTrackMutation();
   const { state } = React.useContext(MainContext);
   const currentUser = state.currentUser;
@@ -38,7 +45,7 @@ const DeleteTrack = ({ track }: { track: TrackType }) => {
       console.error(e);
     }
   };
-  console.log("my current user ",currentUser?.id )
+  console.log('my current user ', currentUser?.id);
   const isCurrentUser = currentUser?.id === track.postedBy?.id;
 
   return isCurrentUser ? (

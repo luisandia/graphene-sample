@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { TrackSetFragment } from './queries';
 
 gql`
   mutation TokenAuth($username: String!, $password: String!) {
@@ -34,4 +35,15 @@ gql`
       trackId
     }
   }
+`;
+
+gql`
+  mutation UpdateTrack($trackId: Int!, $title: String, $description: String, $url: String) {
+    updateTrack(trackId: $trackId, title: $title, url: $url, description: $description) {
+      track {
+        ...trackSetFragment
+      }
+    }
+  }
+  ${TrackSetFragment}
 `;

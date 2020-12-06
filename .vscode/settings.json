@@ -1,4 +1,4 @@
 {
     "deepscan.enable": true,
-    "python.pythonPath": "/home/zafiron/.virtualenvs/django3/bin/python"
+    "python.pythonPath": "backend/.venv/bin/python"
 }

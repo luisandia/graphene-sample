@@ -224,23 +224,26 @@ export type DeleteTrackMutation = { __typename: "Mutation" } & {
   >;
 };
 
+export type UpdateTrackMutationVariables = Exact<{
+  trackId: Scalars["Int"];
+  title?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars["String"]>;
+}>;
+
+export type UpdateTrackMutation = { __typename: "Mutation" } & {
+  updateTrack?: Maybe<
+    { __typename: "UpdateTrack" } & {
+      track?: Maybe<{ __typename: "TrackType" } & TrackSetFragmentFragment>;
+    }
+  >;
+};
+
 export type GetTracksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTracksQuery = { __typename: "Query" } & {
   tracks?: Maybe<
-    Array<
-      Maybe<
-        { __typename: "TrackType" } & Pick<
-          TrackType,
-          "id" | "title" | "description" | "url"
-        > & {
-            likes: Array<{ __typename: "LikeType" } & Pick<LikeType, "id">>;
-            postedBy?: Maybe<
-              { __typename: "UserType" } & Pick<UserType, "id" | "username">
-            >;
-          }
-      >
-    >
+    Array<Maybe<{ __typename: "TrackType" } & TrackSetFragmentFragment>>
   >;
 };
 
@@ -253,7 +256,8 @@ export type CurrentUserFragment = { __typename: "UserType" } & Pick<
   | "email"
   | "isStaff"
   | "isSuperuser"
->;
+> &
+  LikesetFragmentFragment;
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -267,19 +271,7 @@ export type SearchTracksQueryVariables = Exact<{
 
 export type SearchTracksQuery = { __typename: "Query" } & {
   tracks?: Maybe<
-    Array<
-      Maybe<
-        { __typename: "TrackType" } & Pick<
-          TrackType,
-          "id" | "title" | "description" | "url"
-        > & {
-            likes: Array<{ __typename: "LikeType" } & Pick<LikeType, "id">>;
-            postedBy?: Maybe<
-              { __typename: "UserType" } & Pick<UserType, "id" | "username">
-            >;
-          }
-      >
-    >
+    Array<Maybe<{ __typename: "TrackType" } & TrackSetFragmentFragment>>
   >;
 };
 
@@ -293,25 +285,71 @@ export type UserProfileQuery = { __typename: "Query" } & {
       UserType,
       "id" | "username" | "dateJoined"
     > & {
-        likeSet: Array<
-          { __typename: "LikeType" } & Pick<LikeType, "id"> & {
-              track: { __typename: "TrackType" } & {
-                postedBy?: Maybe<
-                  { __typename: "UserType" } & Pick<UserType, "id" | "username">
-                >;
-              } & TrackSetFragmentFragment;
-            }
-        >;
         trackSet: Array<{ __typename: "TrackType" } & TrackSetFragmentFragment>;
+      } & LikesetFragmentFragment
+  >;
+};
+
+export type LikesetFragmentFragment = { __typename: "UserType" } & {
+  likeSet: Array<
+    { __typename: "LikeType" } & Pick<LikeType, "id"> & {
+        track: { __typename: "TrackType" } & TrackSetFragmentFragment;
       }
   >;
 };
 
 export type TrackSetFragmentFragment = { __typename: "TrackType" } & Pick<
   TrackType,
-  "id" | "title" | "url"
-> & { likes: Array<{ __typename: "LikeType" } & Pick<LikeType, "id">> };
+  "id" | "title" | "description" | "url"
+> & {
+    likes: Array<{ __typename: "LikeType" } & Pick<LikeType, "id">>;
+    postedBy?: Maybe<
+      { __typename: "UserType" } & Pick<UserType, "id" | "username">
+    >;
+  };
 
+export type CreateLikeMutationVariables = Exact<{
+  trackId: Scalars["Int"];
+}>;
+
+export type CreateLikeMutation = { __typename: "Mutation" } & {
+  createLike?: Maybe<
+    { __typename: "CreateLike" } & {
+      track?: Maybe<
+        { __typename: "TrackType" } & Pick<TrackType, "id"> & {
+            likes: Array<{ __typename: "LikeType" } & Pick<LikeType, "id">>;
+          }
+      >;
+    }
+  >;
+};
+
+export const TrackSetFragmentFragmentDoc = gql`
+  fragment trackSetFragment on TrackType {
+    id
+    title
+    description
+    url
+    likes {
+      id
+    }
+    postedBy {
+      id
+      username
+    }
+  }
+`;
+export const LikesetFragmentFragmentDoc = gql`
+  fragment likesetFragment on UserType {
+    likeSet {
+      id
+      track {
+        ...trackSetFragment
+      }
+    }
+  }
+  ${TrackSetFragmentFragmentDoc}
+`;
 export const CurrentUserFragmentDoc = gql`
   fragment currentUser on UserType {
     id
@@ -321,17 +359,9 @@ export const CurrentUserFragmentDoc = gql`
     email
     isStaff
     isSuperuser
+    ...likesetFragment
   }
-`;
-export const TrackSetFragmentFragmentDoc = gql`
-  fragment trackSetFragment on TrackType {
-    id
-    title
-    url
-    likes {
-      id
-    }
-  }
+  ${LikesetFragmentFragmentDoc}
 `;
 export const TokenAuthDocument = gql`
   mutation TokenAuth($username: String!, $password: String!) {
@@ -496,22 +526,79 @@ export type DeleteTrackMutationOptions = Apollo.BaseMutationOptions<
   DeleteTrackMutation,
   DeleteTrackMutationVariables
 >;
-export const GetTracksDocument = gql`
-  query getTracks {
-    tracks {
-      id
-      title
-      description
-      url
-      likes {
-        id
-      }
-      postedBy {
-        id
-        username
+export const UpdateTrackDocument = gql`
+  mutation UpdateTrack(
+    $trackId: Int!
+    $title: String
+    $description: String
+    $url: String
+  ) {
+    updateTrack(
+      trackId: $trackId
+      title: $title
+      url: $url
+      description: $description
+    ) {
+      track {
+        ...trackSetFragment
       }
     }
   }
+  ${TrackSetFragmentFragmentDoc}
+`;
+export type UpdateTrackMutationFn = Apollo.MutationFunction<
+  UpdateTrackMutation,
+  UpdateTrackMutationVariables
+>;
+
+/**
+ * __useUpdateTrackMutation__
+ *
+ * To run a mutation, you first call `useUpdateTrackMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTrackMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTrackMutation, { data, loading, error }] = useUpdateTrackMutation({
+ *   variables: {
+ *      trackId: // value for 'trackId'
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      url: // value for 'url'
+ *   },
+ * });
+ */
+export function useUpdateTrackMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateTrackMutation,
+    UpdateTrackMutationVariables
+  >
+) {
+  return Apollo.useMutation<UpdateTrackMutation, UpdateTrackMutationVariables>(
+    UpdateTrackDocument,
+    baseOptions
+  );
+}
+export type UpdateTrackMutationHookResult = ReturnType<
+  typeof useUpdateTrackMutation
+>;
+export type UpdateTrackMutationResult = Apollo.MutationResult<
+  UpdateTrackMutation
+>;
+export type UpdateTrackMutationOptions = Apollo.BaseMutationOptions<
+  UpdateTrackMutation,
+  UpdateTrackMutationVariables
+>;
+export const GetTracksDocument = gql`
+  query getTracks {
+    tracks {
+      ...trackSetFragment
+    }
+  }
+  ${TrackSetFragmentFragmentDoc}
 `;
 
 /**
@@ -599,19 +686,10 @@ export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const SearchTracksDocument = gql`
   query searchTracks($search: String) {
     tracks(search: $search) {
-      id
-      title
-      description
-      url
-      likes {
-        id
-      }
-      postedBy {
-        id
-        username
-      }
+      ...trackSetFragment
     }
   }
+  ${TrackSetFragmentFragmentDoc}
 `;
 
 /**
@@ -668,21 +746,13 @@ export const UserProfileDocument = gql`
       id
       username
       dateJoined
-      likeSet {
-        id
-        track {
-          ...trackSetFragment
-          postedBy {
-            id
-            username
-          }
-        }
-      }
+      ...likesetFragment
       trackSet {
         ...trackSetFragment
       }
     }
   }
+  ${LikesetFragmentFragmentDoc}
   ${TrackSetFragmentFragmentDoc}
 `;
 
@@ -731,4 +801,59 @@ export type UserProfileLazyQueryHookResult = ReturnType<
 export type UserProfileQueryResult = Apollo.QueryResult<
   UserProfileQuery,
   UserProfileQueryVariables
+>;
+export const CreateLikeDocument = gql`
+  mutation CreateLike($trackId: Int!) {
+    createLike(trackId: $trackId) {
+      track {
+        id
+        likes {
+          id
+        }
+      }
+    }
+  }
+`;
+export type CreateLikeMutationFn = Apollo.MutationFunction<
+  CreateLikeMutation,
+  CreateLikeMutationVariables
+>;
+
+/**
+ * __useCreateLikeMutation__
+ *
+ * To run a mutation, you first call `useCreateLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLikeMutation, { data, loading, error }] = useCreateLikeMutation({
+ *   variables: {
+ *      trackId: // value for 'trackId'
+ *   },
+ * });
+ */
+export function useCreateLikeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateLikeMutation,
+    CreateLikeMutationVariables
+  >
+) {
+  return Apollo.useMutation<CreateLikeMutation, CreateLikeMutationVariables>(
+    CreateLikeDocument,
+    baseOptions
+  );
+}
+export type CreateLikeMutationHookResult = ReturnType<
+  typeof useCreateLikeMutation
+>;
+export type CreateLikeMutationResult = Apollo.MutationResult<
+  CreateLikeMutation
+>;
+export type CreateLikeMutationOptions = Apollo.BaseMutationOptions<
+  CreateLikeMutation,
+  CreateLikeMutationVariables
 >;

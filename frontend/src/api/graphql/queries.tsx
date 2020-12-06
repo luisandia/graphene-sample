@@ -3,17 +3,7 @@ import { gql } from '@apollo/client';
 export const GET_TRACKS = gql`
   query getTracks {
     tracks {
-      id
-      title
-      description
-      url
-      likes {
-        id
-      }
-      postedBy {
-        id
-        username
-      }
+      ...trackSetFragment
     }
   }
 `;
@@ -27,6 +17,7 @@ export const CurrentUser = gql`
     email
     isStaff
     isSuperuser
+    ...likesetFragment
   }
 `;
 
@@ -41,17 +32,7 @@ export const ME = gql`
 export const SEARCH_TRACKS = gql`
   query searchTracks($search: String) {
     tracks(search: $search) {
-      id
-      title
-      description
-      url
-      likes {
-        id
-      }
-      postedBy {
-        id
-        username
-      }
+      ...trackSetFragment
     }
   }
 `;
@@ -62,17 +43,19 @@ export const PROFILE_QUERY = gql`
       id
       username
       dateJoined
-      likeSet {
-        id
-        track {
-          ...trackSetFragment
-          postedBy {
-            id
-            username
-          }
-        }
-      }
+      ...likesetFragment
       trackSet {
+        ...trackSetFragment
+      }
+    }
+  }
+`;
+
+export const frag = gql`
+  fragment likesetFragment on UserType {
+    likeSet {
+      id
+      track {
         ...trackSetFragment
       }
     }
@@ -83,9 +66,14 @@ export const TrackSetFragment = gql`
   fragment trackSetFragment on TrackType {
     id
     title
+    description
     url
     likes {
       id
+    }
+    postedBy {
+      id
+      username
     }
   }
 `;
