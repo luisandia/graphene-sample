@@ -1,5 +1,21 @@
 import { gql } from '@apollo/client';
 
+export const TrackSetFragment = gql`
+  fragment trackSetFragment on TrackType {
+    id
+    title
+    description
+    url
+    likes {
+      id
+    }
+    postedBy {
+      id
+      username
+    }
+  }
+`;
+
 export const GET_TRACKS = gql`
   query getTracks {
     tracks {
@@ -35,6 +51,7 @@ export const SEARCH_TRACKS = gql`
       ...trackSetFragment
     }
   }
+  ${TrackSetFragment}
 `;
 
 export const PROFILE_QUERY = gql`
@@ -58,22 +75,6 @@ export const frag = gql`
       track {
         ...trackSetFragment
       }
-    }
-  }
-`;
-
-export const TrackSetFragment = gql`
-  fragment trackSetFragment on TrackType {
-    id
-    title
-    description
-    url
-    likes {
-      id
-    }
-    postedBy {
-      id
-      username
     }
   }
 `;

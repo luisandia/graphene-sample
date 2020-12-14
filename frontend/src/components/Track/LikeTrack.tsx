@@ -16,7 +16,7 @@ const styles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props {
-  trackId: number;
+  trackId: string;
   likeCount: number;
 }
 
@@ -28,7 +28,7 @@ export const LikeTrack: React.FC<Props> = ({ trackId, likeCount }) => {
 
   const handleDisabledLikedTrack = () => {
     const userLikes = currentUser!.likeSet;
-    const isTrackLiked = userLikes.findIndex(({ track }) => track?.id === 1) > -1;
+    const isTrackLiked = userLikes.findIndex(({ track }) => track?.id === trackId) > -1;
 
     return isTrackLiked;
   };
@@ -38,7 +38,7 @@ export const LikeTrack: React.FC<Props> = ({ trackId, likeCount }) => {
       className={classes.iconButton}
       onClick={(event) => {
         event.stopPropagation();
-        mutationCreateLike({ trackId }, client);
+        mutationCreateLike({ trackId:Number(trackId) }, client);
       }}
       disabled={handleDisabledLikedTrack()}
     >

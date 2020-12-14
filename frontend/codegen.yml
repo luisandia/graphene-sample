@@ -29,7 +29,7 @@ generates:
         Date: string
         URL: string
         Upload: string
-        ID: number
+        # ID: number
     presetConfig:
       extension: .generated.tsx
       baseTypesPath: types.ts

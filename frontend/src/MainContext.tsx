@@ -12,6 +12,7 @@ export type MainContextType = {
 };
 export const initialState: ContextState = {
   isAuth: false,
+  currentUser: undefined,
 };
 
 const MainContext = createContext<MainContextType>({

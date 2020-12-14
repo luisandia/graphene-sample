@@ -39,8 +39,6 @@ const SearchTracks = ({
         search,
       },
     });
-    // console.log('res ', data);
-
     setSearchResults(data);
   };
 
@@ -66,7 +64,7 @@ const SearchTracks = ({
           value={search}
           inputRef={inputEl}
         />
-        <IconButton type="submit">
+        <IconButton type="submit" data-testid="track-search">
           <SearchIcon />
         </IconButton>
       </Paper>

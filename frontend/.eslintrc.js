@@ -81,7 +81,7 @@ module.exports = {
         // tagName is gql by default
       },
     ],
-
+    'import/prefer-default-export': OFF,
     'no-unused-vars': WARN,
     'react/jsx-filename-extension': [ERROR, { extensions: ['.jsx', '.tsx'] }],
     'react/no-unescaped-entities': ERROR,

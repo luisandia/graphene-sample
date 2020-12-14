@@ -104,7 +104,7 @@ const UpdateTrack: React.FC<Props> = ({ track }) => {
     console.log(uploadedUrl);
     await updateTrackMutation({
       variables: {
-        trackId: track.id,
+        trackId: Number(track.id),
         title,
         description,
         url: uploadedUrl,
