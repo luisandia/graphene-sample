@@ -42,11 +42,11 @@ const DeleteTrack = ({
       console.error(e);
     }
   };
-  console.log('my current user ', currentUser?.id);
+
   const isCurrentUser = currentUser?.id === track.postedBy?.id;
 
   return isCurrentUser ? (
-    <IconButton onClick={handleDeleteTrack}>
+    <IconButton onClick={handleDeleteTrack}  data-testid={`track-delete-${track.id}`}>
       <TrashIcon />
     </IconButton>
   ) : (

@@ -128,6 +128,7 @@ const CreateTrack = () => {
     <>
       {/* Create track button */}
       <Fab
+        data-testid="track-open-create-dialog"
         color="primary"
         className={classes.fabRoot}
         aria-label="add"
@@ -142,6 +143,7 @@ const CreateTrack = () => {
           <DialogContent>
             <DialogContentText>Add a Title, descripcion & Audio Files</DialogContentText>
             <TextField
+              inputProps={{ "data-testid": "track-title" }}
               required
               fullWidth
               label="Title"
@@ -151,6 +153,7 @@ const CreateTrack = () => {
               onChange={(event) => setTitle(event.target.value)}
             />
             <TextField
+              inputProps={{ "data-testid": "track-description"}}
               fullWidth
               label="Description"
               multiline
@@ -161,6 +164,7 @@ const CreateTrack = () => {
             />
             <FormControl error={Boolean(fileError)}>
               <input
+                data-testid="track-audio-file"
                 id="audio"
                 required
                 type="file"
@@ -188,6 +192,7 @@ const CreateTrack = () => {
               Cancel
             </Button>
             <Button
+              data-testid="track-create"
               type="submit"
               className={classes.save}
               disabled={
