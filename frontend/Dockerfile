@@ -1,12 +1,12 @@
-FROM node:alpine as builder
+FROM node:12-alpine as builder
 WORKDIR /frontend
 COPY ./package.json ./
-RUN npm install
+RUN yarn install
 COPY . .
-RUN npm run build
+RUN yarn build
 
 FROM nginx:1.17
-EXPOSE 3000
+EXPOSE 5000
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /frontend/build /usr/share/nginx/html
 RUN chmod 775 -R /usr/share/nginx/html
