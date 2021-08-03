@@ -12,6 +12,9 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import ProtectedRoute from './ProtectedRoute';
 import reducer from './reducer';
+import LogRocket from 'logrocket';
+
+LogRocket.init('k6leuh/luisandia');
 
 const theme = createMuiTheme({
   palette: {
