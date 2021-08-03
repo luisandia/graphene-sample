@@ -88,7 +88,7 @@ const UpdateTrack: React.FC<Props> = ({ track }) => {
       data.append('resources_type', 'raw');
       data.append('upload_preset', 'react-tracks');
       data.append('cloud_name', 'zafiron');
-      const res = await axios.post('http://api.cloudinary.com/v1_1/zafiron/upload', data);
+      const res = await axios.post('https://api.cloudinary.com/v1_1/zafiron/upload', data);
       return res.data.url;
     } catch (err) {
       console.error('error uploading file ', err);
