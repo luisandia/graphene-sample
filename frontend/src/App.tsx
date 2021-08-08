@@ -1,5 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useMeLazyQuery } from './api/graphql/api';
@@ -12,9 +14,9 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import ProtectedRoute from './ProtectedRoute';
 import reducer from './reducer';
-import LogRocket from 'logrocket';
 
 LogRocket.init('k6leuh/luisandia');
+setupLogRocketReact(LogRocket);
 
 const theme = createMuiTheme({
   palette: {
